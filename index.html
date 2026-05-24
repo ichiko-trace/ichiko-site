@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000">
+  <title>ichiko</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Film noise -->
+  <canvas id="noise" aria-hidden="true"></canvas>
+
+  <!-- Rain -->
+  <canvas id="rain" aria-hidden="true"></canvas>
+
+  <!-- Main scene: ichiko figure -->
+  <main id="scene">
+    <figure id="figure">
+      <img
+        id="ichiko"
+        src="assets/images/ichiko_back_rain.jpg"
+        alt=""
+        draggable="false"
+      >
+    </figure>
+  </main>
+
+  <!-- Flashback overlay -->
+  <div id="flashback" aria-hidden="true"></div>
+
+  <!-- Word reveal -->
+  <div id="words" aria-hidden="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

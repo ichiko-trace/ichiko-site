@@ -1,0 +1,187 @@
+/* ================================================
+   ichiko — v02 immersive
+   ================================================ */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background: #000;
+  cursor: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ---- Canvases ---- */
+
+#noise,
+#rain {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#noise {
+  z-index: 90;
+  opacity: 0.038;
+  mix-blend-mode: screen;
+}
+
+#rain {
+  z-index: 15;
+  opacity: 0;
+  transition: opacity 4s ease;
+}
+
+#rain.active {
+  opacity: 1;
+}
+
+/* ---- Scene: full-screen immersive ---- */
+
+#scene {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  transform-origin: center center;
+}
+
+/* Zoom-in: 18s — spans dark entrance → through entire flashback */
+#scene.zooming {
+  animation: cam-push 18s linear forwards;
+}
+
+/* Zoom-out: same 18s speed */
+#scene.zooming-out {
+  animation: cam-pull 18s linear forwards;
+}
+
+@keyframes cam-push {
+  from { transform: scale(1);    }
+  to   { transform: scale(1.35); }
+}
+
+@keyframes cam-pull {
+  from { transform: scale(1.35); }
+  to   { transform: scale(1);    }
+}
+
+/* ---- Figure: full viewport ---- */
+
+#figure {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#ichiko {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 3.5s ease;
+  filter: saturate(0.78) brightness(0.90);
+  pointer-events: none;
+}
+
+#ichiko.visible {
+  opacity: 1;
+}
+
+/* ---- Flashback (burst container) ---- */
+
+#flashback {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  display: none;
+  overflow: hidden;
+}
+
+#flashback.active {
+  display: block;
+}
+
+/* Screen blend: fragments add light to ichiko, dark areas transparent */
+.flash-frag {
+  position: absolute;
+  width: clamp(200px, 55vw, 420px);
+  height: auto;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  animation: flash-life var(--dur, 0.6s) ease-out forwards;
+}
+
+@keyframes flash-life {
+  0%   { opacity: 0;    }
+  12%  { opacity: 0.85; }
+  75%  { opacity: 0.65; }
+  100% { opacity: 0;    }
+}
+
+/* ---- Words ---- */
+
+#words {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.6rem, 4.5vw, 2.8rem);
+  pointer-events: none;
+}
+
+#words.active {
+  display: flex;
+}
+
+.word {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 2.2s ease, transform 2.8s ease;
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Georgia', serif;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-align: center;
+}
+
+.word.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.word-ichiko {
+  font-size: clamp(34px, 9.5vw, 56px);
+  letter-spacing: 0.35em;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.word-ai {
+  font-size: clamp(28px, 8vw, 48px);
+  letter-spacing: 0.25em;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.word-sub {
+  font-size: clamp(20px, 5.5vw, 32px);
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.45);
+}
